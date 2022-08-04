@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaft.org">
+<head th:fragment="head">
+	<meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+    <link rel="stylesheet" th:href="@{/bootstrap/css/bootstrap.min.css}"/>
+    <title>Cuponera</title>
+</head>
+<body>
+
+ <header>
+        <nav>
+               <a th:href="@{/usuario/}">Usuarios</a>
+            <a th:href="@{/usuario/restaurante/}">Restaurantes</a>
+            <a th:href="@{/usuario/cupones}">Cupones</a>
+        </nav>
+        <section class="textos-header" id="inicio">
+            <h1>Cuponera</h1>
+            <h2>Tus mejores ofertas</h2>
+        </section>
+        <div class="wave" style="height: 150px; overflow: hidden;" ><svg viewBox="0 0 500 150" preserveAspectRatio="none" style="height: 100%; width: 100%;"><path d="M0.00,49.98 C149.99,150.00 349.20,-49.98 500.00,49.98 L500.00,150.00 L0.00,150.00 Z" style="stroke: none; fill: #fff;"></path></svg></div>
+    </header>
+
+    <div class="container-fluid">
+
+        <div class="card">
+            <h5 class="card-header">Usuarios</h5>
+            <div class="card-body">
+                <button class="btn btn-outline-info" data-bs-toggle="modal" data-bs-target="#modal"><img src="../img/agregar.svg">  Agregar</button>
+                <table class="table table-striped">
+                    <thead>
+                        <tr>
+                         	<th>Identificador</th>
+                            <th>Nombre</th>
+                            <th>Apellidos</th>
+                            <th>Correo</th>
+                            <th>Referencia</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                       <tr th:each="usuario : ${listaUsuarios}">
+                       		<td th:text="${usuario.id}"></td>
+                       		<td th:text="${usuario.nombre}"></td>
+                       		<td th:text="${usuario.paterno} + ' ' + ${usuario.materno}"></td>
+                       		<td th:text="${usuario.correo}"></td>
+                       		<td th:text="${usuario.nombreReferenciado}"></td>
+                       </tr>
+                    </tbody>
+                </table>
+            </div>
+          </div>
+           
+          <!-- Modal -->
+          <div class="modal fade" id="modal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+            <div class="modal-dialog">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h5 class="modal-title" id="staticBackdropLabel">Usuario</h5>
+                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <form th:action="@{/usuario/guardar}"  method="post" th:object="${usuario}">
+                    <div class="modal-body">
+                            <div class="mb-3">
+                                <input type="text" class="form-control" placeholder="nombre" name="nombre" th:field="*{nombre}" required>
+                            </div>
+                            <div class="mb-3">
+                                <input type="text" class="form-control" placeholder="Apellido Paterno"  name="paterno" th:field="*{paterno}" required>
+                            </div>
+                            <div class="mb-3">
+                                <input type="text" class="form-control" placeholder="Apellido Materno"  name="materno" th:field="*{materno}">
+                            </div>
+                             <div class="mb-3">
+                                <input type="email" class="form-control" placeholder="Correo Electronico"  name="correo" th:field="*{correo}" required>
+                            </div>
+                              <div class="mb-3">
+                                <input type="text" class="form-control" placeholder="Identificador Referencia"  name="referenciado" th:field="*{referenciado}">
+                            </div>
+                             <div class="mb-3">
+                                <input type="password" class="form-control" placeholder="Contraseña"  name="contrasenia" th:field="*{contrasenia}" required>
+                            </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                        <button type="submit" class="btn btn-primary">Guardar</button>
+                    </div>
+                </form>
+              </div>
+            </div>
+          </div>
+    </div>
+
+
+    <script th:src="@{/bootstrap/js/bootstrap.bundle.js}"></script>
+</body>
+</html>

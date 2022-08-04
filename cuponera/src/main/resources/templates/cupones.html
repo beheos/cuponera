@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaft.org">
+<head th:fragment="head">
+	<meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+    <link rel="stylesheet" th:href="@{/bootstrap/css/bootstrap.min.css}"/>
+    <title>Cuponera</title>
+</head>
+<body>
+
+  <header>
+        <nav>
+            <a th:href="@{/usuario/}">Usuarios</a>
+            <a th:href="@{/usuario/restaurante/}">Restaurantes</a>
+            <a th:href="@{/usuario/cupones}">Cupones</a>
+        </nav>
+        <section class="textos-header" id="inicio">
+            <h1>Cuponera</h1>
+            <h2>Tus mejores ofertas</h2>
+        </section>
+        <div class="wave" style="height: 150px; overflow: hidden;" ><svg viewBox="0 0 500 150" preserveAspectRatio="none" style="height: 100%; width: 100%;"><path d="M0.00,49.98 C149.99,150.00 349.20,-49.98 500.00,49.98 L500.00,150.00 L0.00,150.00 Z" style="stroke: none; fill: #fff;"></path></svg></div>
+    </header>
+
+    <div class="container-fluid">
+
+          <div class="card">
+            <h5 class="card-header">Busueda cupones utilizados</h5>
+            <div class="card-body">
+             <form th:action="@{/usuario/busqueda/}"  method="get" >
+            	<div>
+            		<!--<input type="text" class="form-control" placeholder="Busqueda restaurante" name="id" id="id" th:value="${id}"  required>-->
+            		<select name="id" class="form-control" id="id" th:value="${id}">
+            			<option value="1">Restaurante Mexicana</option>
+            			<option value="2">Restaurante Italiano</option>
+            			<option value="3">Restaurante ComidaChina</option>
+            		</select>
+            	</div>
+            	<div>
+            		<br>
+            		<button class="btn btn-primary" type="submit">Buscar</button>
+            	</div>
+             </form>
+                <table class="table table-striped">
+                    <thead>
+                        <tr>
+                         	<th>Restaurante</th>
+                            <th>Usuario</th>
+                            <th>Descripcion</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                       <tr th:each="restaurante : ${listaRestaurantes}">
+                       		<td th:text="${restaurante.restaurante.restaurante}"></td>
+                       		<td th:text="${restaurante.usuario.nombre} + ' ' + ${restaurante.usuario.paterno} + ' ' + ${restaurante.usuario.materno}"></td>
+                       		<td th:text="${restaurante.restaurante.descripcion}"></td>
+                       </tr>
+                    </tbody>
+                </table>
+            </div>
+          </div>
+    </div>
+
+
+    <script th:src="@{/bootstrap/js/bootstrap.bundle.js}"></script>
+</body>
+</html>
